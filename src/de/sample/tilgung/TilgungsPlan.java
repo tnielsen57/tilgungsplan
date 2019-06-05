@@ -14,8 +14,7 @@ import java.util.List;
 public class TilgungsPlan {
 
     public static void main(String[] args) {
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             System.out.print("Ihr Gesamtdarlehen: ");
             String darlehenInput = br.readLine();
             System.out.print("Ihr gewünschter monatlicher Beitrag: ");
@@ -28,7 +27,6 @@ public class TilgungsPlan {
             for(Zahlung zahlung : tilgungsPlan) {
                 System.out.println(zahlung.toString());
             }
-            br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
