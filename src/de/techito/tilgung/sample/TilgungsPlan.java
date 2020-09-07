@@ -1,6 +1,4 @@
-package de.sample.tilgung;
-
-import de.sample.tilgung.model.Zahlung;
+package de.techito.tilgung.sample;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +8,8 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.techito.tilgung.model.Zahlung;
 
 public class TilgungsPlan {
 

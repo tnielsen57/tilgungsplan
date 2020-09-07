@@ -1,4 +1,4 @@
-package de.sample.tilgung.model;
+package de.techito.tilgung.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

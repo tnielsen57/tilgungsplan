@@ -7,11 +7,9 @@
 *.zip
 *.tar.gz
 *.rar
+*.iml
 hs_err_pid*
-**/.idea/workspace.xml
-**/.idea/tasks.xml
-**/.idea/dictionaries/
-**/.idea/inspectionProfiles/
+/.idea/
 /build/
 /bin/
 /out/
