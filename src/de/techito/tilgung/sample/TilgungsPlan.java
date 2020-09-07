@@ -24,7 +24,7 @@ public class TilgungsPlan {
             System.out.print("Ihr Zinssatz: ");
             String zinsSatzInput = br.readLine();
             List<Zahlung> tilgungsPlan = getTilgungsPlan(new BigDecimal(darlehenInput), new BigDecimal(monatsBeitrag), new BigDecimal(tilgunsSatzInput), new BigDecimal(zinsSatzInput), LocalDate.now().withDayOfMonth(1));
-            for(Zahlung zahlung : tilgungsPlan) {
+            for (Zahlung zahlung : tilgungsPlan) {
                 System.out.println(zahlung.toString());
             }
         } catch (IOException e) {
@@ -56,7 +56,6 @@ public class TilgungsPlan {
         BigDecimal gesamtZinsen = BigDecimal.ZERO;
 
         while (restDarlehen.compareTo(BigDecimal.ZERO) > 0) {
-
 
             if (datumRatenzahlung == null) {
                 datumRatenzahlung = ersteRateFaellig;
