@@ -9,9 +9,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.techito.tilgung.model.TilgungsPlan;
 import de.techito.tilgung.model.Zahlung;
 
-public class TilgungsPlan {
+public class App {
 
     public static void main(String[] args) {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
@@ -23,24 +24,22 @@ public class TilgungsPlan {
             String tilgunsSatzInput = br.readLine();
             System.out.print("Ihr Zinssatz: ");
             String zinsSatzInput = br.readLine();
-            List<Zahlung> tilgungsPlan = getTilgungsPlan(new BigDecimal(darlehenInput), new BigDecimal(monatsBeitrag), new BigDecimal(tilgunsSatzInput), new BigDecimal(zinsSatzInput), LocalDate.now().withDayOfMonth(1));
-            for (Zahlung zahlung : tilgungsPlan) {
-                System.out.println(zahlung.toString());
-            }
+            TilgungsPlan tilgungsPlan = getTilgungsPlan(new BigDecimal(darlehenInput), new BigDecimal(monatsBeitrag), new BigDecimal(tilgunsSatzInput), new BigDecimal(zinsSatzInput), LocalDate.now().withDayOfMonth(1));
+            System.out.println(tilgungsPlan.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    private static List<Zahlung> getTilgungsPlan(
+    public static TilgungsPlan getTilgungsPlan(
             BigDecimal darlehensSumme,
             BigDecimal gewuenschterMonatsbeitrag,
             BigDecimal tilgungsSatz,
             BigDecimal zinsSatz,
             LocalDate ersteRateFaellig) {
 
-        List<Zahlung> tilgungsPlan = new ArrayList<>();
+        List<Zahlung> zahlungen = new ArrayList<>();
 
         BigDecimal monatlicheRate;
         if (gewuenschterMonatsbeitrag != null && gewuenschterMonatsbeitrag.compareTo(BigDecimal.ZERO) != 0) {
@@ -49,7 +48,6 @@ public class TilgungsPlan {
             BigDecimal rateImErstenJahr = darlehensSumme.multiply(tilgungsSatz).add(darlehensSumme.multiply(zinsSatz));
             monatlicheRate = rateImErstenJahr.divide(BigDecimal.valueOf(12), RoundingMode.HALF_UP);
         }
-        System.out.println("Ihre monatliche Rate: " + monatlicheRate);
 
         BigDecimal restDarlehen = darlehensSumme;
         LocalDate datumRatenzahlung = null;
@@ -78,8 +76,8 @@ public class TilgungsPlan {
                 aktuelleZahlung = new Zahlung(datumRatenzahlung, restDarlehen, letzteZinsen, BigDecimal.ZERO, gesamtZinsen);
                 restDarlehen = BigDecimal.ZERO;
             }
-            tilgungsPlan.add(aktuelleZahlung);
+            zahlungen.add(aktuelleZahlung);
         }
-        return tilgungsPlan;
+        return new TilgungsPlan(monatlicheRate, zahlungen);
     }
 }

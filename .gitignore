@@ -8,8 +8,15 @@
 *.tar.gz
 *.rar
 *.iml
+*.project
+*.classpath
 hs_err_pid*
 /.idea/
 /build/
 /bin/
 /out/
+
+.gradle
+.vscode
+.settings
+build
