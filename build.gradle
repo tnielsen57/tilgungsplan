@@ -13,11 +13,9 @@ dependencies {
 }
 
 application {
-    // Define the main class for the application.
-    mainClassName = 'de.techito.tilgung.sample.TilgungsplanApp.java'
+    mainClassName = 'de.techito.tilgung.sample.App'
 }
 
 test {
-    // Use junit platform for unit tests
     useJUnitPlatform()
 }
