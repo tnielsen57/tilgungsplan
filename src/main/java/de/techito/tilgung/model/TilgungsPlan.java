@@ -3,6 +3,9 @@ package de.techito.tilgung.model;
 import java.math.BigDecimal;
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public class TilgungsPlan {
 
     private BigDecimal monatlicheRate;
@@ -12,10 +15,6 @@ public class TilgungsPlan {
     public TilgungsPlan(BigDecimal monatlicheRate, List<Zahlung> zahlungen) {
         this.monatlicheRate = monatlicheRate;
         this.zahlungen = zahlungen;
-    }
-
-    public List<Zahlung> getZahlungen() {
-        return this.zahlungen;
     }
 
     @Override
