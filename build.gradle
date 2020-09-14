@@ -13,7 +13,7 @@ dependencies {
 }
 
 application {
-    mainClassName = 'de.techito.tilgung.sample.App'
+    mainClassName = 'de.techito.tilgung.sample.CommandLineApp'
 }
 
 test {

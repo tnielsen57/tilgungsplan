@@ -1,8 +1,5 @@
-package de.techito.tilgung.sample;
+package de.techito.tilgung.controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -12,24 +9,10 @@ import java.util.List;
 import de.techito.tilgung.model.TilgungsPlan;
 import de.techito.tilgung.model.Zahlung;
 
-public class App {
+public class TilgungsPlanController {
 
-    public static void main(String[] args) {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-            System.out.print("Ihr Gesamtdarlehen: ");
-            String darlehenInput = br.readLine();
-            System.out.print("Ihr gewünschter monatlicher Beitrag: ");
-            String monatsBeitrag = br.readLine();
-            System.out.print("Ihr Tilgungssatz: ");
-            String tilgunsSatzInput = br.readLine();
-            System.out.print("Ihr Zinssatz: ");
-            String zinsSatzInput = br.readLine();
-            TilgungsPlan tilgungsPlan = getTilgungsPlan(new BigDecimal(darlehenInput), new BigDecimal(monatsBeitrag), new BigDecimal(tilgunsSatzInput), new BigDecimal(zinsSatzInput), LocalDate.now().withDayOfMonth(1));
-            System.out.println(tilgungsPlan.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    private TilgungsPlanController() {
+        // Nicht instanziieren, nur statische Methoden
     }
 
     public static TilgungsPlan getTilgungsPlan(
@@ -62,7 +45,8 @@ public class App {
             }
 
             Zahlung aktuelleZahlung;
-            BigDecimal zinsenDerRate, tilgungDerRate;
+            BigDecimal zinsenDerRate;
+            BigDecimal tilgungDerRate;
 
             if (restDarlehen.compareTo(monatlicheRate) > 0) {
                 zinsenDerRate = restDarlehen.multiply(zinsSatz).divide(BigDecimal.valueOf(12), 2, RoundingMode.HALF_UP);
@@ -80,4 +64,5 @@ public class App {
         }
         return new TilgungsPlan(monatlicheRate, zahlungen);
     }
+    
 }
