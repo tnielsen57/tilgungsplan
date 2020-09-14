@@ -5,24 +5,34 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.logging.Logger;
 
 import de.techito.tilgung.controller.TilgungsPlanController;
-import de.techito.tilgung.model.TilgungsPlan;
 
 public class CommandLineApp {
 
+    private static Logger log = Logger.getLogger(CommandLineApp.class.getName());
+
     public static void main(String[] args) {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-            System.out.print("Ihr Gesamtdarlehen: ");
+            log.info("Ihr Gesamtdarlehen: ");
             String darlehenInput = br.readLine();
-            System.out.print("Ihr gewünschter monatlicher Beitrag: ");
+            log.info("Ihr gewünschter monatlicher Beitrag: ");
             String monatsBeitrag = br.readLine();
-            System.out.print("Ihr Tilgungssatz: ");
+            log.info("Ihr Tilgungssatz: ");
             String tilgunsSatzInput = br.readLine();
-            System.out.print("Ihr Zinssatz: ");
+            log.info("Ihr Zinssatz: ");
             String zinsSatzInput = br.readLine();
-            TilgungsPlan tilgungsPlan = TilgungsPlanController.getTilgungsPlan(new BigDecimal(darlehenInput), new BigDecimal(monatsBeitrag), new BigDecimal(tilgunsSatzInput), new BigDecimal(zinsSatzInput), LocalDate.now().withDayOfMonth(1));
-            System.out.println(tilgungsPlan.toString());
+            
+            String tilgungsplanString = 
+                    TilgungsPlanController.getTilgungsPlan(
+                        new BigDecimal(darlehenInput), 
+                        new BigDecimal(monatsBeitrag), 
+                        new BigDecimal(tilgunsSatzInput), 
+                        new BigDecimal(zinsSatzInput), 
+                        LocalDate.now().withDayOfMonth(1)).toString();
+                        
+            log.info(tilgungsplanString);
         } catch (IOException e) {
             e.printStackTrace();
         }
