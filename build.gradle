@@ -1,7 +1,10 @@
 plugins {
     id 'java'
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
 }
+
+mainClassName = 'de.techito.tilgung.view.TilgungsPlanView'
 
 repositories {
     jcenter()
@@ -20,8 +23,9 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
 }
 
-application {
-    mainClassName = 'de.techito.tilgung.sample.CommandLineApp'
+javafx {
+    version = "14"
+    modules = [ 'javafx.base', 'javafx.controls', 'javafx.fxml' ]
 }
 
 test {
