@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.techito.tilgung.controller.TilgungsPlanController;
+import de.techito.tilgung.service.TilgungsPlanService;
 import de.techito.tilgung.util.ParseUtils;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -174,7 +174,7 @@ public class TilgungsPlanView extends Application {
                 errorLabel.setVisible(false);
                 zahlungen.clear();
                 List<TilgungsPlanTableViewModel> zahlungenToAdd = 
-                    TilgungsPlanController.getTilgungsPlan(gesamtdarlehen, monatlicheRate, tilgungsSatz, zinsSatz, ersteFaelligkeit)
+                    TilgungsPlanService.getTilgungsPlan(gesamtdarlehen, monatlicheRate, tilgungsSatz, zinsSatz, ersteFaelligkeit)
                         .getZahlungen()
                         .stream()
                         .map(TilgungsPlanTableViewModel::new)
