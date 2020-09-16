@@ -163,36 +163,30 @@ public class TilgungsPlanView extends Application {
 
 
     private EventHandler<Event> createTilgungsplanHandler() {
-        return new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                if (gesamtdarlehen != null && monatlicheRate != null && tilgungsSatz != null && zinsSatz != null && ersteFaelligkeit != null) {
-                    errorLabel.setVisible(false);
-                    zahlungen.clear();
-                    List<TilgungsPlanTableViewModel> zahlungenToAdd = 
-                        TilgungsPlanController.getTilgungsPlan(gesamtdarlehen, monatlicheRate, tilgungsSatz, zinsSatz, ersteFaelligkeit)
-                            .getZahlungen()
-                            .stream()
-                            .map(TilgungsPlanTableViewModel::new)
-                            .collect(Collectors.toList());
-                    for (TilgungsPlanTableViewModel zahlung : zahlungenToAdd) {
-                        zahlungen.add(zahlung);
-                    }
-                } else {
-                    errorLabel.setVisible(true);
+        return event -> {
+            if (gesamtdarlehen != null && monatlicheRate != null && tilgungsSatz != null && zinsSatz != null && ersteFaelligkeit != null) {
+                errorLabel.setVisible(false);
+                zahlungen.clear();
+                List<TilgungsPlanTableViewModel> zahlungenToAdd = 
+                    TilgungsPlanController.getTilgungsPlan(gesamtdarlehen, monatlicheRate, tilgungsSatz, zinsSatz, ersteFaelligkeit)
+                        .getZahlungen()
+                        .stream()
+                        .map(TilgungsPlanTableViewModel::new)
+                        .collect(Collectors.toList());
+                for (TilgungsPlanTableViewModel zahlung : zahlungenToAdd) {
+                    zahlungen.add(zahlung);
                 }
+            } else {
+                errorLabel.setVisible(true);
             }
         };
     }
 
     private EventHandler<Event> closeWindowHandler() {
-        return new EventHandler<Event>(){
-            @Override
-            public void handle(Event event) {
-                Button closeButton = (Button) event.getSource();
-                Stage stage = (Stage) closeButton.getScene().getWindow();
-                stage.close();
-            }
+        return event -> {
+            Button closeButton = (Button) event.getSource();
+            Stage stage = (Stage) closeButton.getScene().getWindow();
+            stage.close();
         };
     }
 
