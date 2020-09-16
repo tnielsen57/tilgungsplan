@@ -1,4 +1,4 @@
-package de.techito.tilgung.controller;
+package de.techito.tilgung.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -9,9 +9,9 @@ import java.util.List;
 import de.techito.tilgung.model.TilgungsPlan;
 import de.techito.tilgung.model.Zahlung;
 
-public class TilgungsPlanController {
+public class TilgungsPlanService {
 
-    private TilgungsPlanController() {
+    private TilgungsPlanService() {
         // Nicht instanziieren, nur statische Methoden
     }
 

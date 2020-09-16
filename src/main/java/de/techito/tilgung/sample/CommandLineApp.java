@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.logging.Logger;
 
-import de.techito.tilgung.controller.TilgungsPlanController;
+import de.techito.tilgung.service.TilgungsPlanService;
 
 public class CommandLineApp {
 
@@ -25,7 +25,7 @@ public class CommandLineApp {
             String zinsSatzInput = br.readLine();
             
             String tilgungsplanString = 
-                    TilgungsPlanController.getTilgungsPlan(
+                    TilgungsPlanService.getTilgungsPlan(
                         new BigDecimal(darlehenInput), 
                         new BigDecimal(monatsBeitrag), 
                         new BigDecimal(tilgunsSatzInput), 

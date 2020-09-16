@@ -1,4 +1,4 @@
-package de.techito.tilgung.controller;
+package de.techito.tilgung.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test;
 import de.techito.tilgung.model.TilgungsPlan;
 import de.techito.tilgung.model.Zahlung;
 
-public class TilgungsPlanControllerTest {
+public class TilgungsPlanServiceTest {
 
     @Test
     public void shouldGetCorrectNumberOfElements() {
-        TilgungsPlan tilgungsPlan = TilgungsPlanController.getTilgungsPlan(
+        TilgungsPlan tilgungsPlan = TilgungsPlanService.getTilgungsPlan(
             BigDecimal.valueOf(10000),
             BigDecimal.valueOf(2500),
             BigDecimal.valueOf(0.03),
