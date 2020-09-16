@@ -2,6 +2,9 @@ package de.techito.tilgung.view;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 
 import de.techito.tilgung.model.Zahlung;
 import javafx.beans.property.SimpleStringProperty;
@@ -28,7 +31,7 @@ public class TilgungsPlanTableViewModel {
 
     public TilgungsPlanTableViewModel(Zahlung zahlung) {
         this(
-            zahlung.getZahlungsDatum().toString(),
+            zahlung.getZahlungsDatum().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(Locale.GERMAN)),
             zahlung.getTilgungsAnteil().toString(),
             zahlung.getZinsAnteil().toString(),
             zahlung.getRestDarlehen().toString(),
