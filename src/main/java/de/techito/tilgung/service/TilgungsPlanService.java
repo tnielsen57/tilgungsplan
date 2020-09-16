@@ -24,6 +24,10 @@ public class TilgungsPlanService {
 
         List<Zahlung> zahlungen = new ArrayList<>();
 
+        // Faktor für Berechnung der Tilgung / Zinsen aus Prozentwert ermitteln
+        zinsSatz = zinsSatz.movePointLeft(2);
+        tilgungsSatz = tilgungsSatz.movePointLeft(2);
+
         BigDecimal monatlicheRate;
         if (gewuenschterMonatsbeitrag != null && gewuenschterMonatsbeitrag.compareTo(BigDecimal.ZERO) != 0) {
             monatlicheRate = gewuenschterMonatsbeitrag;

@@ -24,6 +24,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class TilgungsPlanView extends Application {
@@ -53,10 +55,25 @@ public class TilgungsPlanView extends Application {
         mainGrid.setVgap(10);
         mainGrid.setPadding(new Insets(10, 10, 20, 10));
 
+        mainGrid.add(getLeftColumnBox(), 0, 1);
+        mainGrid.add(getRightColumnTable(), 1, 1);
+
+        Scene scene = new Scene(mainGrid);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Tilgungsplan");
+        primaryStage.show();
+    }
+
+    private VBox getLeftColumnBox() {
+        VBox vbox = new VBox();
+        vbox.getChildren().addAll(getInputFieldsGrid(), getButtonBox());
+        return vbox;
+    }
+
+    private GridPane getInputFieldsGrid() {
         GridPane inputGrid = new GridPane();
         inputGrid.setHgap(10);
-        inputGrid.setVgap(10);
-        inputGrid.setPadding(new Insets(10, 10, 20, 10));
+        inputGrid.setVgap(5);
 
         errorLabel.setText("Bitte alle Werte vorgeben!");
         errorLabel.setVisible(false);
@@ -81,7 +98,7 @@ public class TilgungsPlanView extends Application {
             }
         });
 
-        Label tilgungsSatzLabel = new Label("Tilgungssatz:");
+        Label tilgungsSatzLabel = new Label("Tilgungssatz in Prozent:");
         TextField tilgungsSatzInput = new TextField();
         tilgungsSatzInput.addEventHandler(InputEvent.ANY, event -> {
             if (ParseUtils.isNumeric(tilgungsSatzInput.getText())) {
@@ -91,7 +108,7 @@ public class TilgungsPlanView extends Application {
             }
         });
 
-        Label zinsSatzLabel = new Label("Zinssatz:");
+        Label zinsSatzLabel = new Label("Zinssatz in Prozent:");
         TextField zinsSatzInput = new TextField();
         zinsSatzInput.addEventHandler(InputEvent.ANY, event -> {
             if (ParseUtils.isNumeric(zinsSatzInput.getText())) {
@@ -105,6 +122,30 @@ public class TilgungsPlanView extends Application {
         DatePicker ersteFaelligkeitInput = new DatePicker();
         ersteFaelligkeitInput.addEventHandler(ActionEvent.ANY, event -> ersteFaelligkeit = ersteFaelligkeitInput.getValue());
 
+        inputGrid.add(gesamtDarlehenLabel, 0, 1);
+        inputGrid.add(gesamtDarlehenInput, 1, 1);
+
+        inputGrid.add(monatlicheRateLabel, 0, 2);
+        inputGrid.add(monatlicheRateInput, 1, 2);
+
+        inputGrid.add(tilgungsSatzLabel, 0, 3);
+        inputGrid.add(tilgungsSatzInput, 1, 3);
+
+        inputGrid.add(zinsSatzLabel, 0, 4);
+        inputGrid.add(zinsSatzInput, 1, 4);
+
+        inputGrid.add(erstFaelligkeitLabel, 0, 5);
+        inputGrid.add(ersteFaelligkeitInput, 1, 5);
+
+        inputGrid.add(errorLabel, 0, 6);
+
+        return inputGrid;
+    }
+
+    private HBox getButtonBox() {
+        HBox hbox = new HBox();
+        hbox.setSpacing(5);
+
         Button createButton = new Button("Erstelle Tilgungsplan");
         createButton.setOnMouseClicked(createTilgungsplanHandler());
         createButton.setOnTouchPressed(createTilgungsplanHandler());
@@ -113,6 +154,12 @@ public class TilgungsPlanView extends Application {
         quitButton.setOnMouseClicked(closeWindowHandler());
         quitButton.setOnTouchPressed(closeWindowHandler());
 
+        hbox.getChildren().addAll(createButton, quitButton);
+
+        return hbox;
+    }
+
+    private TableView<TilgungsPlanTableViewModel> getRightColumnTable() {
         TableView<TilgungsPlanTableViewModel> zahlungenTable = new TableView<>();
 
         TableColumn<TilgungsPlanTableViewModel, String> column1 = new TableColumn<>("Fälligkeit");
@@ -138,33 +185,7 @@ public class TilgungsPlanView extends Application {
 
         zahlungenTable.setItems(zahlungen);
 
-        inputGrid.add(gesamtDarlehenLabel, 0, 1);
-        inputGrid.add(gesamtDarlehenInput, 1, 1);
-
-        inputGrid.add(monatlicheRateLabel, 0, 2);
-        inputGrid.add(monatlicheRateInput, 1, 2);
-
-        inputGrid.add(tilgungsSatzLabel, 0, 3);
-        inputGrid.add(tilgungsSatzInput, 1, 3);
-
-        inputGrid.add(zinsSatzLabel, 0, 4);
-        inputGrid.add(zinsSatzInput, 1, 4);
-
-        inputGrid.add(erstFaelligkeitLabel, 0, 5);
-        inputGrid.add(ersteFaelligkeitInput, 1, 5);
-
-        inputGrid.add(errorLabel, 0, 6);
-
-        inputGrid.add(createButton, 0, 7);
-        inputGrid.add(quitButton, 1, 7);
-
-        mainGrid.add(inputGrid, 0, 1);
-        mainGrid.add(zahlungenTable, 0, 2);
-
-        Scene scene = new Scene(mainGrid);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Tilgungsplan");
-        primaryStage.show();
+        return zahlungenTable;
     }
 
 
