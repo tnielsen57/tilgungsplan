@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import de.techito.tilgung.model.Zahlung;
 import javafx.beans.property.SimpleStringProperty;
 
-public class ZahlungTableModel {
+public class TilgungsPlanTableViewModel {
 
     private final SimpleStringProperty zahlungsDatum;
 
@@ -18,7 +18,7 @@ public class ZahlungTableModel {
 
     private final SimpleStringProperty zinsenGesamtBisher;
 
-    public ZahlungTableModel(String zahlungsDatum, String tilgungsAnteil, String zinsAnteil, String restDarlehen, String zinsenGesamtBisher) {
+    public TilgungsPlanTableViewModel(String zahlungsDatum, String tilgungsAnteil, String zinsAnteil, String restDarlehen, String zinsenGesamtBisher) {
         this.zahlungsDatum = new SimpleStringProperty(zahlungsDatum);
         this.tilgungsAnteil = new SimpleStringProperty(tilgungsAnteil);
         this.zinsAnteil = new SimpleStringProperty(zinsAnteil);
@@ -26,7 +26,7 @@ public class ZahlungTableModel {
         this.zinsenGesamtBisher = new SimpleStringProperty(zinsenGesamtBisher);
     }
 
-    public ZahlungTableModel(Zahlung zahlung) {
+    public TilgungsPlanTableViewModel(Zahlung zahlung) {
         this(
             zahlung.getZahlungsDatum().toString(),
             zahlung.getTilgungsAnteil().toString(),

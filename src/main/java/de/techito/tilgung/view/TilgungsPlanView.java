@@ -37,7 +37,7 @@ public class TilgungsPlanView extends Application {
 
     private LocalDate ersteFaelligkeit;
 
-    private ObservableList<ZahlungTableModel> zahlungen = FXCollections.observableArrayList();
+    private ObservableList<TilgungsPlanTableViewModel> zahlungen = FXCollections.observableArrayList();
 
     private Label errorLabel = new Label();
 
@@ -112,21 +112,21 @@ public class TilgungsPlanView extends Application {
         quitButton.setOnMouseClicked(closeWindowHandler());
         quitButton.setOnTouchPressed(closeWindowHandler());
 
-        TableView<ZahlungTableModel> zahlungenTable = new TableView<>();
+        TableView<TilgungsPlanTableViewModel> zahlungenTable = new TableView<>();
 
-        TableColumn<ZahlungTableModel, String> column1 = new TableColumn<>("Fälligkeit");
+        TableColumn<TilgungsPlanTableViewModel, String> column1 = new TableColumn<>("Fälligkeit");
         column1.setCellValueFactory(new PropertyValueFactory<>("zahlungsDatum"));
 
-        TableColumn<ZahlungTableModel, String> column2 = new TableColumn<>("Tilgungsanteil");
+        TableColumn<TilgungsPlanTableViewModel, String> column2 = new TableColumn<>("Tilgungsanteil");
         column2.setCellValueFactory(new PropertyValueFactory<>("tilgungsAnteil"));
 
-        TableColumn<ZahlungTableModel, String> column3 = new TableColumn<>("Zinsanteil");
+        TableColumn<TilgungsPlanTableViewModel, String> column3 = new TableColumn<>("Zinsanteil");
         column3.setCellValueFactory(new PropertyValueFactory<>("zinsAnteil"));
 
-        TableColumn<ZahlungTableModel, String> column4 = new TableColumn<>("Restdarlehen");
+        TableColumn<TilgungsPlanTableViewModel, String> column4 = new TableColumn<>("Restdarlehen");
         column4.setCellValueFactory(new PropertyValueFactory<>("restDarlehen"));
 
-        TableColumn<ZahlungTableModel, String> column5 = new TableColumn<>("Zinsen gesamt bisher");
+        TableColumn<TilgungsPlanTableViewModel, String> column5 = new TableColumn<>("Zinsen gesamt bisher");
         column5.setCellValueFactory(new PropertyValueFactory<>("zinsenGesamtBisher"));
 
         zahlungenTable.getColumns().addAll(column1, column2, column3, column4, column5);
@@ -169,13 +169,13 @@ public class TilgungsPlanView extends Application {
                 if (gesamtdarlehen != null && monatlicheRate != null && tilgungsSatz != null && zinsSatz != null && ersteFaelligkeit != null) {
                     errorLabel.setVisible(false);
                     zahlungen.clear();
-                    List<ZahlungTableModel> zahlungenToAdd = 
+                    List<TilgungsPlanTableViewModel> zahlungenToAdd = 
                         TilgungsPlanController.getTilgungsPlan(gesamtdarlehen, monatlicheRate, tilgungsSatz, zinsSatz, ersteFaelligkeit)
                             .getZahlungen()
                             .stream()
-                            .map(ZahlungTableModel::new)
+                            .map(TilgungsPlanTableViewModel::new)
                             .collect(Collectors.toList());
-                    for (ZahlungTableModel zahlung : zahlungenToAdd) {
+                    for (TilgungsPlanTableViewModel zahlung : zahlungenToAdd) {
                         zahlungen.add(zahlung);
                     }
                 } else {
