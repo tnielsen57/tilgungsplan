@@ -10,6 +10,7 @@ import de.techito.tilgung.util.ParseUtils;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -102,7 +103,7 @@ public class TilgungsPlanView extends Application {
 
         Label erstFaelligkeitLabel = new Label("Erste Rate fällig am:");
         DatePicker ersteFaelligkeitInput = new DatePicker();
-        ersteFaelligkeitInput.addEventHandler(InputEvent.ANY, event -> ersteFaelligkeit = ersteFaelligkeitInput.getValue());
+        ersteFaelligkeitInput.addEventHandler(ActionEvent.ANY, event -> ersteFaelligkeit = ersteFaelligkeitInput.getValue());
 
         Button createButton = new Button("Erstelle Tilgungsplan");
         createButton.setOnMouseClicked(createTilgungsplanHandler());
