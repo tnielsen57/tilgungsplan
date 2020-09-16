@@ -129,7 +129,12 @@ public class TilgungsPlanView extends Application {
         TableColumn<TilgungsPlanTableViewModel, String> column5 = new TableColumn<>("Zinsen gesamt bisher");
         column5.setCellValueFactory(new PropertyValueFactory<>("zinsenGesamtBisher"));
 
-        zahlungenTable.getColumns().addAll(column1, column2, column3, column4, column5);
+        zahlungenTable.getColumns().add(column1);
+        zahlungenTable.getColumns().add(column2);
+        zahlungenTable.getColumns().add(column3);
+        zahlungenTable.getColumns().add(column4);
+        zahlungenTable.getColumns().add(column5);
+
         zahlungenTable.setItems(zahlungen);
 
         inputGrid.add(gesamtDarlehenLabel, 0, 1);
