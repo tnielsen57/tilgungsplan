@@ -28,7 +28,7 @@ public class TilgungsPlanService {
         if (gewuenschterMonatsbeitrag != null && gewuenschterMonatsbeitrag.compareTo(BigDecimal.ZERO) != 0) {
             monatlicheRate = gewuenschterMonatsbeitrag;
         } else {
-            BigDecimal rateImErstenJahr = darlehensSumme.multiply(tilgungsSatz).add(darlehensSumme.multiply(zinsSatz));
+            BigDecimal rateImErstenJahr = darlehensSumme.multiply(tilgungsSatz.divide(BigDecimal.valueOf(100))).add(darlehensSumme.multiply(zinsSatz));
             monatlicheRate = rateImErstenJahr.divide(BigDecimal.valueOf(12), RoundingMode.HALF_UP);
         }
 
@@ -49,7 +49,7 @@ public class TilgungsPlanService {
             BigDecimal tilgungDerRate;
 
             if (restDarlehen.compareTo(monatlicheRate) > 0) {
-                zinsenDerRate = restDarlehen.multiply(zinsSatz).divide(BigDecimal.valueOf(12), 2, RoundingMode.HALF_UP);
+                zinsenDerRate = restDarlehen.multiply(zinsSatz.divide(BigDecimal.valueOf(100))).divide(BigDecimal.valueOf(12), 2, RoundingMode.HALF_UP);
                 tilgungDerRate = monatlicheRate.subtract(zinsenDerRate).setScale(2, RoundingMode.HALF_UP);
                 restDarlehen = restDarlehen.subtract(tilgungDerRate);
                 gesamtZinsen = gesamtZinsen.add(zinsenDerRate);

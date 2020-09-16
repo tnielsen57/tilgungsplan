@@ -81,7 +81,7 @@ public class TilgungsPlanView extends Application {
             }
         });
 
-        Label tilgungsSatzLabel = new Label("Tilgungssatz:");
+        Label tilgungsSatzLabel = new Label("Tilgungssatz in Prozent:");
         TextField tilgungsSatzInput = new TextField();
         tilgungsSatzInput.addEventHandler(InputEvent.ANY, event -> {
             if (ParseUtils.isNumeric(tilgungsSatzInput.getText())) {
@@ -91,7 +91,7 @@ public class TilgungsPlanView extends Application {
             }
         });
 
-        Label zinsSatzLabel = new Label("Zinssatz:");
+        Label zinsSatzLabel = new Label("Zinssatz in Prozent:");
         TextField zinsSatzInput = new TextField();
         zinsSatzInput.addEventHandler(InputEvent.ANY, event -> {
             if (ParseUtils.isNumeric(zinsSatzInput.getText())) {
