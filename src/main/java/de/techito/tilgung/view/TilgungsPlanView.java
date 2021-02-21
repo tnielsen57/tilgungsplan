@@ -23,6 +23,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputEvent;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -55,12 +56,30 @@ public class TilgungsPlanView extends Application {
         mainGrid.setVgap(10);
         mainGrid.setPadding(new Insets(10, 10, 20, 10));
 
-        mainGrid.add(getLeftColumnBox(), 0, 1);
-        mainGrid.add(getRightColumnTable(), 1, 1);
+        ColumnConstraints leftColumnConstraints = new ColumnConstraints();
+        leftColumnConstraints.setFillWidth(false);
+        leftColumnConstraints.setPercentWidth(34);
+
+        ColumnConstraints rightColumnConstraints = new ColumnConstraints();
+        rightColumnConstraints.setFillWidth(true);
+
+        mainGrid.getColumnConstraints().addAll(leftColumnConstraints, rightColumnConstraints);
+
+        VBox leftColumn = getLeftColumnBox();
+        leftColumn.prefWidthProperty().bind(primaryStage.widthProperty());
+        leftColumn.prefHeightProperty().bind(primaryStage.heightProperty());
+
+        TableView<TilgungsPlanTableViewModel> rightColumn = getRightColumnTable();
+        rightColumn.prefWidthProperty().bind(primaryStage.widthProperty());
+        rightColumn.prefHeightProperty().bind(primaryStage.heightProperty());
+
+        mainGrid.add(leftColumn, 0, 1);
+        mainGrid.add(rightColumn, 1, 1);
 
         Scene scene = new Scene(mainGrid);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Tilgungsplan");
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 
@@ -164,18 +183,23 @@ public class TilgungsPlanView extends Application {
 
         TableColumn<TilgungsPlanTableViewModel, String> column1 = new TableColumn<>("Fälligkeit");
         column1.setCellValueFactory(new PropertyValueFactory<>("zahlungsDatum"));
+        column1.prefWidthProperty().bind(zahlungenTable.widthProperty().divide(5));
 
         TableColumn<TilgungsPlanTableViewModel, String> column2 = new TableColumn<>("Tilgungsanteil");
         column2.setCellValueFactory(new PropertyValueFactory<>("tilgungsAnteil"));
+        column2.prefWidthProperty().bind(zahlungenTable.widthProperty().divide(5));
 
         TableColumn<TilgungsPlanTableViewModel, String> column3 = new TableColumn<>("Zinsanteil");
         column3.setCellValueFactory(new PropertyValueFactory<>("zinsAnteil"));
+        column3.prefWidthProperty().bind(zahlungenTable.widthProperty().divide(5));
 
         TableColumn<TilgungsPlanTableViewModel, String> column4 = new TableColumn<>("Restdarlehen");
         column4.setCellValueFactory(new PropertyValueFactory<>("restDarlehen"));
+        column4.prefWidthProperty().bind(zahlungenTable.widthProperty().divide(5));
 
         TableColumn<TilgungsPlanTableViewModel, String> column5 = new TableColumn<>("Zinsen gesamt bisher");
         column5.setCellValueFactory(new PropertyValueFactory<>("zinsenGesamtBisher"));
+        column5.prefWidthProperty().bind(zahlungenTable.widthProperty().divide(5));
 
         zahlungenTable.getColumns().add(column1);
         zahlungenTable.getColumns().add(column2);
