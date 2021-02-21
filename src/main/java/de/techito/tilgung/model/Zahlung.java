@@ -3,9 +3,11 @@ package de.techito.tilgung.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class Zahlung {
 
     private LocalDate zahlungsDatum;
@@ -17,14 +19,6 @@ public class Zahlung {
     private BigDecimal restDarlehen;
 
     private BigDecimal zinsenGesamtBisher;
-
-    public Zahlung(LocalDate zahlungsDatum, BigDecimal tilgungsAnteil, BigDecimal zinsAnteil, BigDecimal restDarlehen, BigDecimal zinsenGesamtBisher) {
-        this.zahlungsDatum = zahlungsDatum;
-        this.tilgungsAnteil = tilgungsAnteil;
-        this.zinsAnteil = zinsAnteil;
-        this.restDarlehen = restDarlehen;
-        this.zinsenGesamtBisher = zinsenGesamtBisher;
-    }
 
     @Override
     public String toString() {
