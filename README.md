@@ -7,4 +7,4 @@ Simple Anwendung für die Kalkulation eines Annuitätendarlehens inklusive aller
 - Übersicht über Tilgungs- und Zinsanteil je monatlicher Zahlung
 - Ausgabe der kumulierten Zinsen
 
-[UI-Screenshot](docs/ui.png)
+![UI-Screenshot](docs/ui.png)
