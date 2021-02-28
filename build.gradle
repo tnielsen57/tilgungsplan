@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
 }
 
 mainClassName = 'de.techito.tilgung.view.TilgungsPlanView'
@@ -30,7 +30,7 @@ tasks.withType(JavaCompile) {
 }
 
 javafx {
-    version = "14"
+    version = "15"
     modules = [ 'javafx.base', 'javafx.controls', 'javafx.fxml' ]
 }
 
