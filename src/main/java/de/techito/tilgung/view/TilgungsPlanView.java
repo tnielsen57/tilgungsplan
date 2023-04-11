@@ -218,15 +218,12 @@ public class TilgungsPlanView extends Application {
             if (gesamtdarlehen != null && monatlicheRate != null && tilgungsSatz != null && zinsSatz != null && ersteFaelligkeit != null) {
                 errorLabel.setVisible(false);
                 zahlungen.clear();
-                List<TilgungsPlanTableViewModel> zahlungenToAdd = 
-                    TilgungsPlanService.getTilgungsPlan(gesamtdarlehen, monatlicheRate, tilgungsSatz, zinsSatz, ersteFaelligkeit)
-                        .getZahlungen()
-                        .stream()
-                        .map(TilgungsPlanTableViewModel::new)
-                        .collect(Collectors.toList());
-                for (TilgungsPlanTableViewModel zahlung : zahlungenToAdd) {
-                    zahlungen.add(zahlung);
-                }
+                TilgungsPlanService
+                    .getTilgungsPlan(gesamtdarlehen, monatlicheRate, tilgungsSatz, zinsSatz, ersteFaelligkeit)
+                    .getZahlungen()
+                    .stream()
+                    .map(TilgungsPlanTableViewModel::new)
+                    .forEach(zahlungen::add);
             } else {
                 errorLabel.setVisible(true);
             }
