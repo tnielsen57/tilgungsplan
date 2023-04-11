@@ -20,7 +20,9 @@ public class TilgungsPlanService {
             BigDecimal gewuenschterMonatsbeitrag,
             BigDecimal tilgungsSatz,
             BigDecimal zinsSatz,
-            LocalDate ersteRateFaellig) {
+            LocalDate ersteRateFaellig,
+            boolean isSondertilgung,
+            BigDecimal sondertilgungBetrag) {
 
         List<Zahlung> zahlungen = new ArrayList<>();
 
@@ -52,15 +54,15 @@ public class TilgungsPlanService {
             BigDecimal zinsenDerRate;
             BigDecimal tilgungDerRate;
 
-            // BigDecimal sonderZahlung = BigDecimal.valueOf(1800);
             if (restDarlehen.compareTo(monatlicheRate) > 0) {
-                /*
-                if (datumRatenzahlung != null && datumRatenzahlung.getMonthValue() == 12 && restDarlehen.compareTo(sonderZahlung) > 0) {
-                    // Sonderzahlung
-                    restDarlehen = restDarlehen.subtract(sonderZahlung);
-                    zahlungen.add(new Zahlung(datumRatenzahlung, sonderZahlung, BigDecimal.ZERO, restDarlehen, gesamtZinsen));
+                // Sonderzahlung einmal jährlich
+                if (isSondertilgung 
+                        && datumRatenzahlung != null 
+                        && datumRatenzahlung.getMonthValue() == 12 
+                        && restDarlehen.compareTo(sondertilgungBetrag) > 0) {
+                    restDarlehen = restDarlehen.subtract(sondertilgungBetrag);
+                    zahlungen.add(new Zahlung(datumRatenzahlung, sondertilgungBetrag, BigDecimal.ZERO, restDarlehen, gesamtZinsen));
                 }
-                */
 
                 zinsenDerRate = restDarlehen.multiply(zinsSatz).divide(BigDecimal.valueOf(12), 2, RoundingMode.HALF_UP);
                 tilgungDerRate = monatlicheRate.subtract(zinsenDerRate).setScale(2, RoundingMode.HALF_UP);

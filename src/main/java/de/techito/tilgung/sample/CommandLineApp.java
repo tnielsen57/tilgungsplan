@@ -30,7 +30,9 @@ public class CommandLineApp {
                         new BigDecimal(monatsBeitrag), 
                         new BigDecimal(tilgunsSatzInput), 
                         new BigDecimal(zinsSatzInput), 
-                        LocalDate.now().withDayOfMonth(1)).toString();
+                        LocalDate.now().withDayOfMonth(1),
+                        false,
+                        null).toString();
                         
             log.info(tilgungsplanString);
         } catch (IOException e) {

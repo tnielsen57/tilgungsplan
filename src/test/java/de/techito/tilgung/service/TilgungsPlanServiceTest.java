@@ -19,7 +19,9 @@ public class TilgungsPlanServiceTest {
             BigDecimal.valueOf(2500),
             BigDecimal.valueOf(3),
             BigDecimal.valueOf(1.2),
-            LocalDate.of(2020, 9, 1));
+            LocalDate.of(2020, 9, 1),
+            false,
+            null);
 
         Assertions.assertEquals(BigDecimal.valueOf(2500), tilgungsPlan.getMonatlicheRate());
         Assertions.assertEquals(5, tilgungsPlan.getZahlungen().size());

@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -39,9 +40,15 @@ public class TilgungsPlanView extends Application {
 
     private LocalDate ersteFaelligkeit;
 
+    private boolean sondertilgung = false;
+
+    private BigDecimal sondertilgungBetrag;
+
     private ObservableList<TilgungsPlanTableViewModel> zahlungen = FXCollections.observableArrayList();
 
     private Label errorLabel = new Label();
+
+    private Label errorLabelSondertilgung = new Label();
 
     public static void main(String[] args) {
         launch(args);
@@ -95,6 +102,9 @@ public class TilgungsPlanView extends Application {
         errorLabel.setText("Bitte alle Werte vorgeben!");
         errorLabel.setVisible(false);
 
+        errorLabelSondertilgung.setText("Bitte Betrag der Sondertilgung angeben!");
+        errorLabelSondertilgung.setVisible(false);
+
         Label gesamtDarlehenLabel = new Label("Gesamtdarlehen:");
         TextField gesamtDarlehenInput = new TextField();
         gesamtDarlehenInput.addEventHandler(InputEvent.ANY, event -> {
@@ -139,6 +149,20 @@ public class TilgungsPlanView extends Application {
         DatePicker ersteFaelligkeitInput = new DatePicker();
         ersteFaelligkeitInput.addEventHandler(ActionEvent.ANY, event -> ersteFaelligkeit = ersteFaelligkeitInput.getValue());
 
+        Label sondertilgungLabel = new Label("Regelmäßige Sondertilgungen:");
+        CheckBox sondertilgungCheckBox = new CheckBox();
+        sondertilgungCheckBox.addEventHandler(InputEvent.ANY, event -> this.sondertilgung = sondertilgungCheckBox.isSelected());
+
+        Label sondertilgungBetragLabel = new Label("Betrag Sonderzahlung:");
+        TextField sondertilgungBetragInput = new TextField();
+        sondertilgungBetragInput.addEventHandler(InputEvent.ANY, event -> {
+            if (ParseUtils.isNumeric(sondertilgungBetragInput.getText())) {
+                this.sondertilgungBetrag = new BigDecimal(sondertilgungBetragInput.getText());
+            } else {
+                this.sondertilgungBetrag = null;
+            }
+        });
+
         inputGrid.add(gesamtDarlehenLabel, 0, 1);
         inputGrid.add(gesamtDarlehenInput, 1, 1);
 
@@ -154,7 +178,14 @@ public class TilgungsPlanView extends Application {
         inputGrid.add(erstFaelligkeitLabel, 0, 5);
         inputGrid.add(ersteFaelligkeitInput, 1, 5);
 
-        inputGrid.add(errorLabel, 0, 6);
+        inputGrid.add(sondertilgungLabel, 0, 6);
+        inputGrid.add(sondertilgungCheckBox, 1, 6);
+
+        inputGrid.add(sondertilgungBetragLabel, 0, 7);
+        inputGrid.add(sondertilgungBetragInput, 1, 7);
+
+        inputGrid.add(errorLabel, 0, 8);
+        inputGrid.add(errorLabelSondertilgung, 0, 9);
 
         return inputGrid;
     }
@@ -213,17 +244,20 @@ public class TilgungsPlanView extends Application {
 
     private EventHandler<Event> createTilgungsplanHandler() {
         return event -> {
-            if (gesamtdarlehen != null && monatlicheRate != null && tilgungsSatz != null && zinsSatz != null && ersteFaelligkeit != null) {
+            if (gesamtdarlehen == null || monatlicheRate == null || tilgungsSatz == null || zinsSatz == null || ersteFaelligkeit == null) {
+                errorLabel.setVisible(true);
+            } else if (sondertilgung && sondertilgungBetrag == null) {
+                errorLabelSondertilgung.setVisible(true);
+            } else {
                 errorLabel.setVisible(false);
+                errorLabelSondertilgung.setVisible(false);
                 zahlungen.clear();
                 TilgungsPlanService
-                    .getTilgungsPlan(gesamtdarlehen, monatlicheRate, tilgungsSatz, zinsSatz, ersteFaelligkeit)
+                    .getTilgungsPlan(gesamtdarlehen, monatlicheRate, tilgungsSatz, zinsSatz, ersteFaelligkeit, sondertilgung, sondertilgungBetrag)
                     .getZahlungen()
                     .stream()
                     .map(TilgungsPlanTableViewModel::new)
                     .forEach(zahlungen::add);
-            } else {
-                errorLabel.setVisible(true);
             }
         };
     }
