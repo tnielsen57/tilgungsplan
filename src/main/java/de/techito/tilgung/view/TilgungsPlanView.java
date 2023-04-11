@@ -2,8 +2,6 @@ package de.techito.tilgung.view;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import de.techito.tilgung.service.TilgungsPlanService;
 import de.techito.tilgung.util.ParseUtils;
